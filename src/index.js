@@ -1,4 +1,6 @@
 import app from "./app.js";
+import { PORT } from "./contants.js";
+import "./db/connection.js";
 
-app.listen(8085);
-console.log("App running on port: 8085");
+app.listen(PORT);
+console.log(`Server is running on port: ${PORT}`);

@@ -10,7 +10,7 @@ export const getCategoriesByStore = async (req, res) => {
     const response = await fetch(`${url}/categories`);
     const categories = await response.json();
     
-    res.json(categories);
+    res.json(categories.map((category => ({...category, storeName: store}))));
   }catch(e) {
     console.error(e);
     res.status(500).json({ message: e.message })
