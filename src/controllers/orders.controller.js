@@ -67,9 +67,26 @@ export const createOrder = async (req, res) => {
 
 export const getOrders = async (_req, res) => {
   try {
-    const orders = await Orders.find();
-    res.json(orders);
-  }catch(e) {
+    const orders = await Orders.find().populate('userId', '-password -__v');
+    // Map the orders to include both userId and user with all user fields
+    const ordersWithUser = orders.map(order => {
+      const orderObj = order.toObject();
+      // Transform _id to id and remove _id
+      const { _id, userId, ...rest } = orderObj;
+      const { _id: userIdValue, ...userRest } = userId;
+      
+      return {
+        id: _id,
+        ...rest,
+        userId: userIdValue,
+        user: {
+          id: userIdValue,
+          ...userRest
+        }
+      };
+    });
+    res.json(ordersWithUser);
+  } catch(e) {
     console.error(e);
     res.status(500).json({ message: e.message });
   }
