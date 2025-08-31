@@ -2,6 +2,11 @@ import { model, Schema } from "mongoose";
 
 const ordersSchema = new Schema(
   {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true
+    },
     orders: [{
       orderId: {
         type: String,
@@ -13,7 +18,7 @@ const ordersSchema = new Schema(
       }
     }]
   },
-  { 
+  {
     timestamps: true,
     versionKey: false
   }

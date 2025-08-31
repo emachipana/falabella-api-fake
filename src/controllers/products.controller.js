@@ -22,7 +22,7 @@ export const getProducts = async (req, res) => {
 				const url = urls[index];
 				if(!url) continue;
 
-				const pageToSend = url.includes("inversiones") ? page - 1 : page;
+				const pageToSend = (url.includes("inversiones") || url.includes("446w")) ? page - 1 : page;
 				const response = await fetch(`${url}/products?page=${pageToSend}&size=${size / 5}&minPrice=${minPrice}&maxPrice=${maxPrice}&search=${search}`);
 				const products = await response.json();
 				result.content = [...result.content, ...products.content];
